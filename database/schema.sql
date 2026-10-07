@@ -1,13 +1,14 @@
 CREATE DATABASE IF NOT EXISTS inventory_management;
+
 USE inventory_management;
 
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL UNIQUE,
     description VARCHAR(255)
 ) ENGINE = InnoDB;
 
-CREATE TABLE suppliers (
+CREATE TABLE IF NOT EXISTS suppliers (
     supplier_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_name VARCHAR(150) NOT NULL,
     phone VARCHAR(20),
@@ -15,7 +16,7 @@ CREATE TABLE suppliers (
     address VARCHAR(255)
 ) ENGINE = InnoDB;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -24,7 +25,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB;
 
-CREATE TABLE products (
+CREATE TABLE IF NOT EXISTS products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(150) NOT NULL,
     sku VARCHAR(50) NOT NULL UNIQUE,
@@ -57,7 +58,7 @@ CREATE TABLE products (
         ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
-CREATE TABLE stock_transactions (
+CREATE TABLE IF NOT EXISTS stock_transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -82,8 +83,6 @@ CREATE TABLE stock_transactions (
         ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
-CREATE INDEX idx_product_name
-ON products(product_name);
-
-CREATE INDEX idx_transaction_date
-ON stock_transactions(transaction_date);
+-- Existing indexes:
+-- idx_product_name on products(product_name)
+-- idx_transaction_date on stock_transactions(transaction_date)
